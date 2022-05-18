@@ -9,13 +9,13 @@ export enum RouteNames {
 
 export interface IRoutes {
   path: string;
-  component: ReactElement;
+  element: ReactElement;
   exact?: boolean;
 }
 
 export const publicRoutes: IRoutes[] = [
-  { path: RouteNames.LOGIN, exact: true, component: <Login /> },
+  { path: RouteNames.LOGIN, exact: true, element: <Login /> },
 ];
 export const privateRoutes: IRoutes[] = [
-  { path: RouteNames.EVENT, exact: true, component: <Event /> },
+  { path: RouteNames.EVENT, exact: true, element: <Event /> },
 ];

@@ -1,20 +1,22 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "../routes";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { privateRoutes, publicRoutes, RouteNames } from "../routes";
 
 export const AppRouter = () => {
-  const auth = true;
-  return auth === true ? (
+  const auth = false;
+  return auth ? (
     <Routes>
       {privateRoutes.map((route) => (
-        <Route {...route} />
+        <Route {...route} key={route.path} />
       ))}
+      <Route path="*" element={<Navigate to={RouteNames.EVENT} />} />
     </Routes>
   ) : (
     <Routes>
       {publicRoutes.map((route) => (
-        <Route path={route.path} element={route.component} />
+        <Route path={route.path} element={route.element} key={route.path} />
       ))}
+      <Route path="*" element={<Navigate to={RouteNames.LOGIN} />} />
     </Routes>
   );
 };
