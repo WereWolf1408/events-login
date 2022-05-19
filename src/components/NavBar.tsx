@@ -2,17 +2,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, MenuProps, Row } from "antd";
 import { RouteNames } from "../routes";
+import { useSelector } from "react-redux";
+import { useTypedSelector } from "../hooks/usedTypedSelected";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const { auth } = useTypedSelector((state) => state);
+
   const loginClickHandler: MenuProps["onClick"] = (e): void => {
     navigate(RouteNames.LOGIN);
   };
   const logoutClickHandler: MenuProps["onClick"] = (e): void => {
     console.log(`---> logout`);
   };
-
-  const auth = true;
 
   return (
     <Layout.Header>
