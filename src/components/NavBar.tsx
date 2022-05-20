@@ -2,12 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout, Menu, MenuProps, Row } from "antd";
 import { RouteNames } from "../routes";
-import { useSelector } from "react-redux";
 import { useTypedSelector } from "../hooks/usedTypedSelected";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { auth } = useTypedSelector((state) => state);
+  const { auth: isAuth } = useTypedSelector((state) => state);
 
   const loginClickHandler: MenuProps["onClick"] = (e): void => {
     navigate(RouteNames.LOGIN);
@@ -19,7 +18,7 @@ const NavBar = () => {
   return (
     <Layout.Header>
       <Row justify="end">
-        {auth ? (
+        {isAuth ? (
           <>
             <div className="user-info">User Name</div>
             <Menu

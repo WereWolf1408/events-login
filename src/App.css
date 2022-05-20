@@ -3,3 +3,7 @@
 .user-info {
   color: white;
 }
+
+.h100 {
+  height: calc(100vh - 64px);
+}
