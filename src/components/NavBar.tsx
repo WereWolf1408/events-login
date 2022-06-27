@@ -3,16 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { Layout, Menu, MenuProps, Row } from "antd";
 import { RouteNames } from "../routes";
 import { useTypedSelector } from "../hooks/usedTypedSelected";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { useActions } from "../hooks/useActions";
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { auth: isAuth } = useTypedSelector((state) => state);
+  const { logout } = useActions();
+  const { isAuth, user } = useTypedSelector((state) => state.auth);
 
   const loginClickHandler: MenuProps["onClick"] = (e): void => {
     navigate(RouteNames.LOGIN);
   };
   const logoutClickHandler: MenuProps["onClick"] = (e): void => {
     console.log(`---> logout`);
+    logout();
   };
 
   return (
@@ -20,7 +25,7 @@ const NavBar = () => {
       <Row justify="end">
         {isAuth ? (
           <>
-            <div className="user-info">User Name</div>
+            <div className="user-info">{user.username}</div>
             <Menu
               theme="dark"
               mode="horizontal"

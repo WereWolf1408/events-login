@@ -1,12 +1,16 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import React, { FC } from "react";
-import { useDispatch } from "react-redux";
 import { rules } from "../utils/rules";
+import { useTypedSelector } from "../hooks/usedTypedSelected";
+import { useActions } from "../hooks/useActions";
 
 const LoginForm: FC = () => {
-  const dispatch = useDispatch();
+  const { isLoading } = useTypedSelector((state) => state.auth);
+  const { login } = useActions();
+
   const submit = () => {
     console.log("---> form submit");
+    login({ username: "Enot", password: "123" });
   };
 
   return (
@@ -43,7 +47,7 @@ const LoginForm: FC = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Submit
         </Button>
       </Form.Item>

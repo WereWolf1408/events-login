@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../../models/IUser";
-import {
-  IAuthState,
-  SetAuthType,
-  SetErrorType,
-  SetIsLoadingType,
-  SetUserType,
-} from "./types";
+import { caseReducer } from "./action-creater";
+import { login } from "./async-action-creater";
+import { IAuthState, SetUserType } from "./types";
 
 const initialState: IAuthState = {
   isAuth: false,
@@ -18,19 +14,17 @@ const initialState: IAuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setAuth(state, action: PayloadAction<SetAuthType>) {
-      state.isAuth = action.payload;
-    },
-    setError(state, action: PayloadAction<SetErrorType>) {
-      state.error = action.payload;
-    },
-    setUser(state, action: PayloadAction<SetUserType>) {
-      state.user = action.payload;
-    },
-    setIsLoading(state, action: PayloadAction<SetIsLoadingType>) {
-      state.isLoading = action.payload;
-    },
+  reducers: caseReducer,
+  extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      if (action.payload !== null) {
+        state.user = action.payload;
+      }
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      console.log(`----> login rejected case`);
+      console.log(action.payload);
+    });
   },
 });
 
